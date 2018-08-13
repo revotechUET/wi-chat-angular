@@ -1,0 +1,75 @@
+.chat-message .angry-1-icon,
+.chat-message .angry-icon,
+.chat-message .bored-1-icon,
+.chat-message .bored-2-icon,
+.chat-message .bored-icon,
+.chat-message .confused-1-icon,
+.chat-message .confused-icon,
+.chat-message .crying-1-icon,
+.chat-message .crying-icon,
+.chat-message .embarrassed-icon,
+.chat-message .emoticons-icon,
+.chat-message .happy-1-icon,
+.chat-message .happy-2-icon,
+.chat-message .happy-3-icon,
+.chat-message .happy-4-icon,
+.chat-message .happy-icon,
+.chat-message .ill-icon,
+.chat-message .in-love-icon,
+.chat-message .kissing-icon,
+.chat-message .mad-icon,
+.chat-message .nerd-icon,
+.chat-message .ninja-icon,
+.chat-message .quiet-icon,
+.chat-message .sad-icon,
+.chat-message .secret-icon,
+.chat-message .smart-icon,
+.chat-message .smile-icon,
+.chat-message .smiling-icon,
+.chat-message .surprised-1-icon,
+.chat-message .surprised-icon,
+.chat-message .suspicious-1-icon,
+.chat-message .suspicious-icon,
+.chat-message .tongue-out-1-icon,
+.chat-message .tongue-out-icon,
+.chat-message .unhappy-icon,
+.chat-message .wink-icon
+{ display: inline-block; background: url('/../../img/png.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
+
+.chat-message .angry-1-icon { background-position: -0px -0px; width: 16px; height: 16px; }
+.chat-message .angry-icon { background-position: -16px -0px; width: 16px; height: 16px; }
+.chat-message .bored-1-icon { background-position: -32px -0px; width: 16px; height: 16px; }
+.chat-message .bored-2-icon { background-position: -48px -0px; width: 16px; height: 16px; }
+.chat-message .bored-icon { background-position: -64px -0px; width: 16px; height: 16px; }
+.chat-message .confused-1-icon { background-position: -80px -0px; width: 16px; height: 16px; }
+.chat-message .confused-icon { background-position: -0px -16px; width: 16px; height: 16px; }
+.chat-message .crying-1-icon { background-position: -16px -16px; width: 16px; height: 16px; }
+.chat-message .crying-icon { background-position: -32px -16px; width: 16px; height: 16px; }
+.chat-message .embarrassed-icon { background-position: -48px -16px; width: 16px; height: 16px; }
+.chat-message .emoticons-icon { background-position: -64px -16px; width: 16px; height: 16px; }
+.chat-message .happy-1-icon { background-position: -80px -16px; width: 16px; height: 16px; }
+.chat-message .happy-2-icon { background-position: -0px -32px; width: 16px; height: 16px; }
+.chat-message .happy-3-icon { background-position: -16px -32px; width: 16px; height: 16px; }
+.chat-message .happy-4-icon { background-position: -32px -32px; width: 16px; height: 16px; }
+.chat-message .happy-icon { background-position: -48px -32px; width: 16px; height: 16px; }
+.chat-message .ill-icon { background-position: -64px -32px; width: 16px; height: 16px; }
+.chat-message .in-love-icon { background-position: -80px -32px; width: 16px; height: 16px; }
+.chat-message .kissing-icon { background-position: -0px -48px; width: 16px; height: 16px; }
+.chat-message .mad-icon { background-position: -16px -48px; width: 16px; height: 16px; }
+.chat-message .nerd-icon { background-position: -32px -48px; width: 16px; height: 16px; }
+.chat-message .ninja-icon { background-position: -48px -48px; width: 16px; height: 16px; }
+.chat-message .quiet-icon { background-position: -64px -48px; width: 16px; height: 16px; }
+.chat-message .sad-icon { background-position: -80px -48px; width: 16px; height: 16px; }
+.chat-message .secret-icon { background-position: -0px -64px; width: 16px; height: 16px; }
+.chat-message .smart-icon { background-position: -16px -64px; width: 16px; height: 16px; }
+.chat-message .smile-icon { background-position: -32px -64px; width: 16px; height: 16px; }
+.chat-message .smiling-icon { background-position: -48px -64px; width: 16px; height: 16px; }
+.chat-message .surprised-1-icon { background-position: -64px -64px; width: 16px; height: 16px; }
+.chat-message .surprised-icon { background-position: -80px -64px; width: 16px; height: 16px; }
+.chat-message .suspicious-1-icon { background-position: -0px -80px; width: 16px; height: 16px; }
+.chat-message .suspicious-icon { background-position: -16px -80px; width: 16px; height: 16px; }
+.chat-message .tongue-out-1-icon { background-position: -32px -80px; width: 16px; height: 16px; }
+.chat-message .tongue-out-icon { background-position: -48px -80px; width: 16px; height: 16px; }
+.chat-message .unhappy-icon { background-position: -64px -80px; width: 16px; height: 16px; }
+.chat-message .wink-icon { background-position: -80px -80px; width: 16px; height: 16px; }
+.chat-message .unselectable { -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -o-user-select: none; user-select: none; }

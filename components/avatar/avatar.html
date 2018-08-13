@@ -1,0 +1,20 @@
+<style>
+    .circle {
+        position: relative;
+        border-radius: 100px;
+        display: table;
+        width: 30px;
+        height: 30px;
+    }
+    .name {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        font-size: 150%;
+        color: #fff;
+    }
+</style>
+<div class="circle" style="background: {{avatar.color}}">
+    <b class="name">{{avatar.name()}}</b>
+</div>

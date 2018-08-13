@@ -1,0 +1,146 @@
+{
+    "angry-1": {
+        "icon": "angry-1-icon",
+        "text-replace": [":@"]
+    },
+    "angry": {
+        "icon": "angry-icon",
+        "text-replace": [":-@"]
+    },
+    "bored-1": {
+        "icon": "bored-1-icon",
+        "text-replace": [":|"]
+    },
+    "bored-2": {
+        "icon": "bored-2-icon",
+        "text-replace": ["|-)"]
+    },
+    "bored": {
+        "icon": "bored-icon",
+        "text-replace": [":-|"]
+    },
+    "confused-1": {
+        "icon": "confused-1-icon",
+        "text-replace": [":?"]
+    },
+    "confused": {
+        "icon": "confused-icon",
+        "text-replace": [":-?"]
+    },
+    "crying-1": {
+        "icon": "crying-1-icon",
+        "text-replace": [":'("]
+    },
+    "crying": {
+        "icon": "crying-icon",
+        "text-replace": [":("]
+    },
+    "embarrassed": {
+        "icon": "embarrassed-icon",
+        "text-replace": []
+    },
+    "emoticons": {
+        "icon": "emoticons-icon",
+        "text-replace": []
+    },
+    "happy-1": {
+        "icon": "happy-1-icon",
+        "text-replace": []
+    },
+    "happy-2": {
+        "icon": "happy-2-icon",
+        "text-replace": []
+    },
+    "happy-3": {
+        "icon": "happy-3-icon",
+        "text-replace": []
+    },
+    "happy-4": {
+        "icon": "happy-4-icon",
+        "text-replace": []
+    },
+    "happy": {
+        "icon": "happy-icon",
+        "text-replace": []
+    },
+    "ill": {
+        "icon": "ill-icon",
+        "text-replace": []
+    },
+    "in-love": {
+        "icon": "in-love-icon",
+        "text-replace": []
+    },
+    "kissing": {
+        "icon": "kissing-icon",
+        "text-replace": [":*"]
+    },
+    "mad": {
+        "icon": "mad-icon",
+        "text-replace": []
+    },
+    "nerd": {
+        "icon": "nerd-icon",
+        "text-replace": []
+    },
+    "ninja": {
+        "icon": "ninja-icon",
+        "text-replace": []
+    },
+    "quiet": {
+        "icon": "quiet-icon",
+        "text-replace": []
+    },
+    "sad": {
+        "icon": "sad-icon",
+        "text-replace": [")-)"]
+    },
+    "secret": {
+        "icon": "secret-icon",
+        "text-replace": []
+    },
+    "smart": {
+        "icon": "smart-icon",
+        "text-replace": ["8-)"]
+    },
+    "smile": {
+        "icon": "smile-icon",
+        "text-replace": [":))", ":)"]
+    },
+    "smiling": {
+        "icon": "smiling-icon",
+        "text-replace": [":-)"]
+    },
+    "surprised-1": {
+        "icon": "surprised-1-icon",
+        "text-replace": [":-o"]
+    },
+    "surprised": {
+        "icon": "surprised-icon",
+        "text-replace": [":o"]
+    },
+    "suspicious-1": {
+        "icon": "suspicious-1-icon",
+        "text-replace": [":-/"]
+    },
+    "suspicious": {
+        "icon": "suspicious-icon",
+        "text-replace": []
+    },
+    "tongue-out-1": {
+        "icon": "tongue-out-1-icon",
+        "text-replace": [":-P"]
+    },
+    "tongue-out": {
+        "icon": "tongue-out-icon",
+        "text-replace": [":P"]
+    },
+    "unhappy": {
+        "icon": "unhappy-icon",
+        "text-replace": [":(("]
+    },
+    "wink": {
+        "icon": "wink-icon",
+        "text-replace": [";)"]
+    }
+}

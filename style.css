@@ -1,0 +1,85 @@
+wi-chat .wraper {
+	width: 550px;
+	height: 450px;
+	z-index: 100;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+wi-chat .container, .row {
+	margin: 0px;
+	padding: 0px;
+}
+
+wi-chat .container {
+	position: fixed;
+	width: 600px;
+	height: 450px;
+	border: 2px solid #dddddd;
+}
+
+wi-chat .header {
+	height: 6%;
+	padding: 3px 6px;
+	background: linear-gradient(to bottom, #eee, #ddd, #bbb);
+}
+
+wi-chat .content {
+	height: 94%;
+	padding: 0px 6px 6px;
+	background: #ccc;
+}
+
+wi-chat .left, wi-chat .right {
+	padding: 0;
+	margin: auto;
+	height: 100%;
+	background: #fff;
+}
+
+wi-chat .left {
+}
+
+wi-chat .right {
+	border-left: 6px solid #ccc;
+	overflow: overlay;
+}
+
+wi-chat .list-message {
+	border-bottom: 6px solid #ccc;
+	overflow: overlay;
+	height: 93%;
+}
+
+wi-chat .enter-message {
+	height: 7%;
+}
+
+wi-chat textarea:focus, input:focus {
+	outline: none;
+}
+
+wi-chat ::-webkit-scrollbar {
+	width: 5px;
+}
+wi-chat .conver:hover{
+	background: #ddd;
+	cursor: pointer;
+}
+wi-chat .dropdown-menu {
+	left: auto;
+}
+/* Track */
+
+wi-chat ::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 1px rgb(202, 202, 202);
+	border-radius: 2px;
+}
+
+/* Handle */
+
+wi-chat ::-webkit-scrollbar-thumb {
+	background: rgb(207, 207, 207);
+	border-radius: 10px;
+}
