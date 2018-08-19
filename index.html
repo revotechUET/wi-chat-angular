@@ -1,37 +1,11 @@
-<div ng-show="wiChat.show || true" class="wraper container" ng-init="wiChat.showAddUser=false;">
+<div ng-show="wiChat.show" class="wraper container">
     <div class="row header" style="font-size: 16px; position: relative;">
-        Conversation({{wiChat.showNameCurConver()}})
+        <p style="width: 80%; overflow-x: hidden; text-overflow: ellipsis; display: inline-block;">Conversation({{wiChat.curConver.name}})</p>
         <span ng-click="wiChat.show=false" style="float: right; cursor: pointer;" class="fa fa-close"></span>
-        <span style="float: right; cursor: pointer; margin-right: 5px" class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></span>
-        <ul class="dropdown-menu" style="position: absolute; right: 5px; top: auto">
-            <li ng-click="wiChat.addUsers=[];wiChat.showAddUser=true;wiChat.showGroups=false;wiChat.showHelpDesk=false;wiChat.setNullOfTextarea()" ng-show="wiChat.curConver.type!=3">
-                <a href="#">Add Members</a>
-            </li>
-            <li ng-click="wiChat.leaveConver()" ng-show="wiChat.curConver.type==2">
-                <a href="#">Leave conversation</a>
-            </li>
-        </ul>
     </div>
     <div class="row content">
         <div class="col-sm-8 left" style="position: relative;">
-            <div class="row" ng-show="wiChat.showAddUser" style="width: 100%; height: 35px;position: absolute;z-index: 101">
-                <div class="col-sm-10" style="padding: 0px">
-                    <textarea ng-model="wiChat.searchUser" placeholder="Enter username ..." class="addUser" rows="1" style=" width: 100%; height: 100%;resize: none; padding: 5px 5px 4px 10px;" autofocus>
-                    </textarea>
-                </div>
-                <div class="col-sm-2" style="padding: 0px">
-                    <button ng-click="wiChat.showAddUser=false; wiChat.addUser()" class="btn btn-primary" style="height:100%;width: 100%;"> OK
-                    </button>
-                </div>
-            </div>
-            <div class="row" ng-show="wiChat.showAddUser && wiChat.addUsers.length" 
-                style="width: 83%; position: absolute; top: 35px; background: #fff; border: 1px solid gray;z-index: 101; min-height: 35px;max-height: 50%; overflow-y: overlay; padding: 5px">
-                <div ng-repeat="username in wiChat.addUsers track by $index" style="display: inline-block;border: 1px solid #9cb4d8; margin-right: 5px;background: #e9ebee; padding: 0px 5px;">
-                    {{username}}
-                    <span ng-click="wiChat.addUsers.splice($index, 1);" class="fa fa-close" style="font-size: 12px; color: #365899; cursor: pointer;"></span>
-                </div>
-            </div>
-            <div class="row list-message" style="padding: 5px 10px; overflow-y: overlay" ngf-drop="chatGroup.upload($files)" class="drop-box"
+            <div class="row list-message" style="padding: 5px 10px; overflow-y: overlay" ngf-drop="wiChat.upload($files)" class="drop-box"
                 ngf-drag-over-class="'dragover'" ngf-multiple="true">
                 <div class="row" ng-repeat="message in wiChat.curConver.Messages track by $index">
                     <div ng-if="$index==0 || chatGroup.getDate(message.sendAt, chatGroup.conver.Messages[$index-1].sendAt)" class="row" style="text-align: center; color: #acacac; font-weight: bold"
@@ -51,7 +25,7 @@
                     </div>
                     <div ng-if="message.User.username!=wiChat.user.username" style="width: 70%; float: left;margin-bottom: 2px">
                         <div class="col-sm-2" style="padding: 0px">
-                            <avatar username="message.User.username" color="message.User.color" ng-show="$index==wiChat.curConver.Messages.length || message.User.username!= wiChat.curConver.Messages[$index+1].User.username"></avatar>
+                            <avatar username="message.User.username" color="''" ng-show="$index==wiChat.curConver.Messages.length || message.User.username!= wiChat.curConver.Messages[$index+1].User.username"></avatar>
                             <div ng-show="!($index==wiChat.curConver.Messages.length || message.User.username!= wiChat.curConver.Messages[$index+1].User.username)"
                                 style="display: table; width: 35px; height: 35px; border: 1px solid balck;">
                             </div>
@@ -101,9 +75,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row input-group enter-message">
+            <div class="row input-group enter-message" ng-click="wiChat.seenMessage()">
                 <textarea class="text-message" rows="1" style="border: none; width: 100%; height: 100%;resize: none;position: relative; padding: 5px 5px 4px 10px;"
-                    placeholder="Enter your message ..." autofocus></textarea>
+                    placeholder="Enter your message ..."></textarea>
                 <span class="input-group-addon" style="background: none; height:100%; border: none; cursor: pointer;padding: 0px 5px">
                     <i style="font-size: 30px; font-family: none;color: gray" class="glyphicon glyphicon-plus" ngf-select="wiChat.upload($files)"
                         multiple="multiple"></i>
@@ -112,81 +86,56 @@
         </div>
         <div class="col-sm-4 right" ng-init="wiChat.showContacts=true;wiChat.showGroups=true;wiChat.showHelpDesk=true;" style="position: relative;">
             <div class="row" style="height: 93%;overflow-y: overlay; overflow-x: hidden">
-                <div class="listUser" ng-show="wiChat.showAddUser" style="margin-bottom: 10px; padding: 5px;">
+                <div class="help" style="margin-bottom: 10px;padding: 5px;">
                     <div class="row" style="font-weight: 600; color: #4a4a4a">
-                        LIST USERS
-                        <!-- <span ng-show="wiChat.showContacts" ng-click="wiChat.showContacts=!wiChat.showContacts;" class="fa fa-chevron-up" style="float: right;cursor: pointer;"></span>
-                        <span ng-show="!wiChat.showContacts" ng-click="wiChat.showContacts=!wiChat.showContacts;" class="fa fa-chevron-down" style="float: right;cursor: pointer;"></span> -->
+                        HELP
                     </div>
-                    <div class="listContact row">
-                        <div ng-repeat="user in wiChat.listUserSearch | filter: wiChat.searchUser" 
-                            ng-show="user.username != wiChat.user.username && wiChat.filterUserSearch(user.username)"
-                            ng-click="wiChat.getConver({type:1, name:user.username})"
+                    <div class="listGroup row">
+                        <div ng-repeat="conver in wiChat.listConver | filter:{name: ('Help_Desk-' + wiChat.user.username)} " ng-click="wiChat.changeCurConver(conver)"
                             class="row conver" style="position: relative;margin-top: 5px">
                             <div style="width: 20%;padding: 0px">
-                                <avatar username="user.username" color="user.color"></avatar>
+                                <avatar username="'?'" color="'red'"></avatar>
                             </div>
                             <div style="width: 80%;padding: 0px;padding-right: 10px; position: absolute; transform: translateY(-50%); top: 50%; margin-left: 40px">
-                                <span>{{user.username}}</span>
+                                <p style="text-overflow: ellipsis; display: inline-block; width: 70%; overflow-x: hidden; margin-bottom: 0px; white-space:nowrap; font-weight: {{conver.lastMessFontWeight}}">Help desk</p>
+                                <span ng-if="conver.lasMessFontWeight" class="badge badge-danger" style="background: red;float: right; font-size: 10px">New</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="contacts" ng-show="!wiChat.showAddUser" style="margin-bottom: 10px; padding: 5px;">
+                <div class="groups" ng-show="wiChat.listConver.length>1" style="margin-bottom: 10px;padding: 5px;">
                     <div class="row" style="font-weight: 600; color: #4a4a4a">
-                        CONTACTS
+                        CHAT GROUP
+                    </div>
+                    <div  class="listGroup row">
+                        <div ng-repeat="conver in wiChat.listConver | filter:{name: wiChat.groupName}" ng-click="wiChat.changeCurConver(conver)"
+                            class="row conver" style="position: relative;margin-top: 5px">
+                            <div style="width: 20%;padding: 0px">
+                                <avatar username="'G'" color="'steelblue'"></avatar>
+                            </div>
+                            <div style="width: 80%;padding: 0px;padding-right: 10px; position: absolute; transform: translateY(-50%); top: 50%; margin-left: 40px">
+                                <p style="text-overflow: ellipsis; display: inline-block; width: 70%; overflow-x: hidden; margin-bottom: 0px; white-space:nowrap; font-weight: {{conver.lastMessFontWeight}}">{{conver.name}}</p>
+                                <span ng-if="conver.lastMessFontWeight" class="badge badge-danger" style="background: red;float: right; font-size: 10px">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contacts" ng-show="wiChat.listConver.length>1" style="margin-bottom: 10px; padding: 5px;">
+                    <div class="row" style="font-weight: 600; color: #4a4a4a">
+                        CONTACTS OF GROUP
                         <span ng-show="wiChat.showContacts" ng-click="wiChat.showContacts=!wiChat.showContacts;" class="fa fa-chevron-up" style="float: right;cursor: pointer;"></span>
                         <span ng-show="!wiChat.showContacts" ng-click="wiChat.showContacts=!wiChat.showContacts;" class="fa fa-chevron-down" style="float: right;cursor: pointer;"></span>
                     </div>
                     <div ng-show="wiChat.showContacts" class="listContact row">
                         <div ng-repeat="user in wiChat.listUser | filter: wiChat.search | orderBy: 'active'" 
                             ng-show="user.username != wiChat.user.username"
-                            ng-click="wiChat.getConver({type:1, name:user.username})"
-                            class="row conver" style="position: relative;margin-top: 5px">
+                            class="row" style="position: relative;margin-top: 5px">
                             <div style="width: 20%;padding: 0px">
-                                <avatar username="user.username" color="user.color"></avatar>
+                                <avatar username="user.username" color="''"></avatar>
                             </div>
                             <div style="width: 80%;padding: 0px;padding-right: 10px; position: absolute; transform: translateY(-50%); top: 50%; margin-left: 40px">
-                                <span>{{user.username}}</span>
+                                <p style="text-overflow: ellipsis; display: inline-block; width: 80%; overflow-x: hidden; margin-bottom: 0px; white-space:nowrap;">{{user.username}}</p>
                                 <span class="fa fa-circle" style="color: {{user.active}}; float: right; font-size: 10px"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="groups" ng-show="!wiChat.showAddUser" style="margin-bottom: 10px;padding: 5px;">
-                    <div class="row" style="font-weight: 600; color: #4a4a4a">
-                        GROUPS
-                        <span ng-show="wiChat.showGroups" ng-click="wiChat.showGroups=!wiChat.showGroups;" class="fa fa-chevron-up" style="float: right;cursor: pointer;"></span>
-                        <span ng-show="!wiChat.showGroups" ng-click="wiChat.showGroups=!wiChat.showGroups;" class="fa fa-chevron-down" style="float: right;cursor: pointer;"></span>
-                    </div>
-                    <div ng-show="wiChat.showGroups" class="listGroup row">
-                        <div ng-repeat="conver in wiChat.listConver | filter:{type: 2} | filter: wiChat.search" ng-click="wiChat.getConver(conver)"
-                            class="row conver" style="position: relative;margin-top: 5px">
-                            <div style="width: 20%;padding: 0px">
-                                <avatar username="conver.nameShow" color="conver.color"></avatar>
-                            </div>
-                            <div style="width: 80%;padding: 0px;padding-right: 10px; position: absolute; transform: translateY(-50%); top: 50%; margin-left: 40px">
-                                <p style="text-overflow: ellipsis; display: inline-block; width: 80%; overflow-x: hidden; margin-bottom: 0px">{{conver.name}}</p>
-                                <span class="fa fa-circle" style="color: rgb(31, 179, 31); float: right; font-size: 10px"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="help" ng-show="!wiChat.showAddUser" style="margin-bottom: 10px;padding: 5px;">
-                    <div class="row" style="font-weight: 600; color: #4a4a4a">
-                        HELP
-                        <span ng-show="wiChat.showHelpDesk" ng-click="wiChat.showHelpDesk=!wiChat.showHelpDesk;" class="fa fa-chevron-up" style="float: right;cursor: pointer;"></span>
-                        <span ng-show="!wiChat.showHelpDesk" ng-click="wiChat.showHelpDesk=!wiChat.showHelpDesk;" class="fa fa-chevron-down" style="float: right;cursor: pointer;"></span>
-                    </div>
-                    <div ng-show="wiChat.showHelpDesk" class="listGroup row">
-                        <div ng-repeat="conver in wiChat.listConver | filter:{type: 3} | filter: wiChat.search" ng-click="wiChat.getConver(conver)"
-                            class="row conver" style="position: relative;margin-top: 5px">
-                            <div style="width: 20%;padding: 0px">
-                                <avatar username="conver.nameShow" color="conver.color"></avatar>
-                            </div>
-                            <div style="width: 80%;padding: 0px;padding-right: 10px; position: absolute; transform: translateY(-50%); top: 50%; margin-left: 40px">
-                                <span>Help desk</span>
-                                <span class="fa fa-circle" style="color: rgb(31, 179, 31); float: right; font-size: 10px"></span>
                             </div>
                         </div>
                     </div>
@@ -199,6 +148,6 @@
     </div>
 </div>
 <script>
-    var BASE_URL = 'http://127.0.0.1:5001';
+    var BASE_URL = 'http://chat.dev.i2g.cloud';
     var socket = io(BASE_URL);
 </script>

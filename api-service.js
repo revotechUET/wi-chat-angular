@@ -1,18 +1,19 @@
 const moduleName = 'apiServiceModule';
 const serviceName = 'apiService';
-const GET_LIST_USER = '/api/user/list';
+const GET_LIST_USER = 'http://admin.dev.i2g.cloud/user/list';
 const GET_LIST_CONVERSATION_OF_USER = '/api/conversation/list';
 const GET_CONVERSATION = '/api/conversation';
 const LEAVE_CONVERSATION = '/api/conversation/leave';
 const ADD_USER_TO_CONVERSATION = '/api/conversation/user/add'
 const POST_MESSAGE = '/api/message/new'
+const SEEN_MESSAGE = '/api/message/seen';
 const UPLOAD = '/api/upload'
 
 angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
     function doPost(URL, token, data, cb) {
         $http({
             method: 'POST',
-            url: BASE_URL+URL,
+            url: URL == GET_LIST_USER ? URL : (BASE_URL+URL),
             headers: {
                 'Authorization': token
             },
@@ -44,6 +45,9 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
     }
     this.postMessage = function(token, data, cb) {
         doPost(POST_MESSAGE, token, data, cb);
+    }
+    this.seenMessage = function(token, data, cb) {
+        doPost(SEEN_MESSAGE, token, data, cb);
     }
     this.addUserToConversation = function(token, data, cb) {
         doPost(ADD_USER_TO_CONVERSATION, token, data, cb);
