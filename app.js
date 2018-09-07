@@ -27,6 +27,7 @@ function Controller(apiService, $scope, $element, $timeout) {
     this.curConver = {};
     this.listConver = [];
     this.listUser = [];
+    this.curConverId = -9999;
     let textMessage = $element.find('.text-message');
     let listMessage = $element.find('.list-message');
 
@@ -194,6 +195,9 @@ function Controller(apiService, $scope, $element, $timeout) {
         });
     }
     this.changeCurConver = function (conver) {
+
+        self.curConverId = conver.id;
+
         if(self.curConver.id!=conver.id) {
             getConversation(conver.name, function(res) {
                 if(res) {

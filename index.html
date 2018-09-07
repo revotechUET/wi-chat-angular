@@ -92,7 +92,7 @@
                     </div>
                     <div class="listGroup row">
                         <div ng-repeat="conver in wiChat.listConver | filter:{name: ('Help_Desk-' + wiChat.user.username)} " ng-click="wiChat.changeCurConver(conver)"
-                            class="row conver" style="position: relative;margin-top: 5px">
+                            class="row conver" style="position: relative;margin-top: 5px" ng-class="conver.id === wiChat.curConverId ? 'tab-chosen' : ''">
                             <div style="width: 20%;padding: 0px">
                                 <avatar username="'?'" color="'red'"></avatar>
                             </div>
@@ -109,7 +109,7 @@
                     </div>
                     <div  class="listGroup row">
                         <div ng-repeat="conver in wiChat.listConver | filter:{name: wiChat.groupName}" ng-click="wiChat.changeCurConver(conver)"
-                            class="row conver" style="position: relative;margin-top: 5px">
+                            class="row conver" style="position: relative;margin-top: 5px" ng-class="conver.id === wiChat.curConverId ? 'tab-chosen' : ''">
                             <div style="width: 20%;padding: 0px">
                                 <avatar username="'G'" color="'steelblue'"></avatar>
                             </div>

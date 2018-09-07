@@ -83,3 +83,7 @@ wi-chat ::-webkit-scrollbar-thumb {
 	background: rgb(207, 207, 207);
 	border-radius: 10px;
 }
+
+wi-chat .tab-chosen {
+	background: #ddd;
+}
