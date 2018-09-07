@@ -71,6 +71,7 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
             },
             (error) => {
                 console.error(error);
+                if(error.config.file.size>50*1024*1024) __toastr.error('Size of upload file must be less than 50MB');
                 cb();
             });
     }

@@ -28,7 +28,7 @@ function Controller(apiService, $scope, $element, $timeout) {
     this.listUser = [];
     let textMessage = $element.find('.text-message');
     let listMessage = $element.find('.list-message');
-    
+
     function init() {
         let oldHelpDeskId =( self.listConver[0] || {} ).id;
         self.curConver = {}; self.listConver = [];
@@ -63,7 +63,6 @@ function Controller(apiService, $scope, $element, $timeout) {
         })
     }
     function seenMessage() {
-        console.log('seen');
         apiService.seenMessage(self.token, {
             idUser: self.user.id,
             nameConversation: self.curConver.name
@@ -78,7 +77,6 @@ function Controller(apiService, $scope, $element, $timeout) {
     function changeGroup() {
         if(self.groupName) {
             let oldConversationId = self.curConver.id;
-            console.log(self.groupName, self.owner);
             getListUser(self.groupName, self.owner, function(listUser) {
                 if(listUser && listUser.length>=2) {
                     getConversation(self.groupName, function(res) {
@@ -98,7 +96,6 @@ function Controller(apiService, $scope, $element, $timeout) {
             })
         }
     }
-    console.log('chat');
     this.$onInit = function() {
         if(this.token) {
             init();
@@ -145,11 +142,10 @@ function Controller(apiService, $scope, $element, $timeout) {
         }
     });
     socket.on('sendMessage', function (data) {
-        console.log('on message');        
         if(data.username!=self.user.username && !self.show){
             if(data.idConversation==self.listConver[0].id){
                 __toastr.success('Admin has sent message to Help Desk');
-            } 
+            }
             else {
                 __toastr.success(data.username + ' has sent message to ' + data.nameConversation + ' group');
             }
@@ -163,7 +159,6 @@ function Controller(apiService, $scope, $element, $timeout) {
                 }, 500);
             });
         }
-        console.log( $('.text-message').is(':focus'));
         if(!(self.curConver.id == data.idConversation && $('.text-message').is(':focus')) && self.user.username!=data.username) {
             $timeout(function() {
                 self.listConver.filter(function(c) {return c.id == data.idConversation})[0].lastMessFontWeight = 'bolder';
@@ -209,7 +204,7 @@ function Controller(apiService, $scope, $element, $timeout) {
             if(self.curConver.lastMessFontWeight) seenMessage();
         }
     }
-    
+
     ////////////////////
     let lengthUrl = BASE_URL.length;
     this.getImageOrigin = function (path) {
@@ -233,7 +228,6 @@ function Controller(apiService, $scope, $element, $timeout) {
         return time1.toString().substring(0, 15) != time2.toString().substring(0, 15);
     }
     this.seenMessage = function() {
-        console.log('focus');
         if(self.curConver.lastMessFontWeight) seenMessage();
     }
     function preventXSS(text) {
@@ -275,7 +269,6 @@ function Controller(apiService, $scope, $element, $timeout) {
         cursor: 'move'
     })
     socket.on('send-members-online', function(data) {
-        console.log(data);
         if(self.listUser)
         $timeout(function(){
             for(x of data) {

@@ -1,5 +1,5 @@
 let path = require('path');
-let OUTPUT = path.join(__dirname, '../wi-angular/build/vendor/js');
+let OUTPUT = path.join(__dirname, '../wi-angular/source/vendor/js');
 
 
 module.exports = {
