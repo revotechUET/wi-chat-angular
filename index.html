@@ -1,6 +1,6 @@
 <div ng-show="wiChat.show" class="wraper container">
     <div class="row header" style="font-size: 16px; position: relative;">
-        <p style="width: 80%; overflow-x: hidden; text-overflow: ellipsis; display: inline-block;">Conversation({{wiChat.curConver.name}})</p>
+        <p style="width: 80%; overflow-x: hidden; text-overflow: ellipsis; display: inline-block;">Conversation({{wiChat.curConver.name}})<socket-status></socket-status></p>
         <span ng-click="wiChat.show=false" style="float: right; cursor: pointer;" class="fa fa-close"></span>
     </div>
     <div class="row content">
@@ -91,8 +91,8 @@
                         HELP
                     </div>
                     <div class="listGroup row">
-                        <div ng-repeat="conver in wiChat.listConver | filter:{name: ('Help_Desk-' + wiChat.user.username)} " ng-click="wiChat.changeCurConver(conver); conver.click='click'"
-                            ng-class="{{conver.click}}" class="row conver" style="position: relative;margin-top: 5px">
+                        <div ng-repeat="conver in wiChat.listConver | filter:{name: ('Help_Desk-' + wiChat.user.username)} " ng-click="wiChat.changeCurConver(conver)"
+                            class="row conver" style="position: relative;margin-top: 5px">
                             <div style="width: 20%;padding: 0px">
                                 <avatar username="'?'" color="'red'"></avatar>
                             </div>
@@ -108,8 +108,8 @@
                         CHAT GROUP
                     </div>
                     <div  class="listGroup row">
-                        <div ng-repeat="conver in wiChat.listConver | filter:{name: wiChat.groupName}" ng-click="wiChat.changeCurConver(conver); conver.click='click'"
-                            ng-class="{{conver.click}}" class="row conver" style="position: relative;margin-top: 5px">
+                        <div ng-repeat="conver in wiChat.listConver | filter:{name: wiChat.groupName}" ng-click="wiChat.changeCurConver(conver)"
+                            class="row conver" style="position: relative;margin-top: 5px">
                             <div style="width: 20%;padding: 0px">
                                 <avatar username="'G'" color="'steelblue'"></avatar>
                             </div>
@@ -127,7 +127,7 @@
                         <span ng-show="!wiChat.showContacts" ng-click="wiChat.showContacts=!wiChat.showContacts;" class="fa fa-chevron-down" style="float: right;cursor: pointer;"></span>
                     </div>
                     <div ng-show="wiChat.showContacts" class="listContact row">
-                        <div ng-repeat="user in wiChat.listUser | filter: wiChat.search | orderBy: 'active'"
+                        <div ng-repeat="user in wiChat.listUser | filter: wiChat.search | orderBy: 'active'" 
                             ng-show="user.username != wiChat.user.username"
                             class="row" style="position: relative;margin-top: 5px">
                             <div style="width: 20%;padding: 0px">

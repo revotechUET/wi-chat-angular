@@ -1,0 +1,20 @@
+.dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.online {
+    background-color: green;
+}
+
+.offline {
+    background-color: red;
+}
+
+.refresh {
+    color: #222;
+    cursor: pointer;
+}

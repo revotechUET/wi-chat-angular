@@ -3,9 +3,10 @@ let chatService = require('./api-service.js');
 let avatar = require('./components/avatar/avatar.js');
 let chatMessage = require('./components/chat-message/chat-message.js');
 let imgPreview = require('./components/img-preview/img-preview.js');
+let socketStatus = require('./components/socket-status/socket-status');
 let moduleName = componentName = 'wiChat';
 
-angular.module(moduleName, [chatService.name, avatar.name, chatMessage.name, imgPreview.name, 'ngFileUpload'])
+angular.module(moduleName, [chatService.name, avatar.name, chatMessage.name, imgPreview.name,socketStatus.name, 'ngFileUpload'])
     .component(componentName, {
         template: require('./index.html'),
         controller: Controller,

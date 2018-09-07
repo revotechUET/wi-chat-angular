@@ -1,0 +1,13 @@
+<i ng-class="socketStatus.isOnline ? 'dot online' : 'dot offline'"></i>
+
+<!-- <i ng-if="!socketStatus.isOnline" ng-class="dot offline"></i> -->
+
+<i 
+ ng-if="!socketStatus.isOnline"
+ class="fa fa-refresh refresh"
+ title="reconnect socket"
+ aria-hidden="true" 
+ ng-click="socketStatus.reconnect()">
+</i>
+
+<!-- <h1>aklsdjflasdlfj</h1> -->
