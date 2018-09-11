@@ -2,12 +2,14 @@ const componentName = 'socketStatus';
 const moduleName = 'socket-status';
 require('../socket-status/socket-status.css');
 
-function Controller() {
+Controller.$inject = ['$window', '$scope']
+function Controller($window, $scope) {
     let self = this;
     let socket = window.socket
 
     self.$onInit = function() {
         preProcess()
+        // socket.disconnect()
         socket.on('connect', function() {
             
             self.isOnline = true
@@ -15,6 +17,12 @@ function Controller() {
 
         socket.on('disconnect', function() {
             self.isOnline = false
+        })
+
+        $window.addEventListener('offline', function() {
+            self.isOnline = false
+            $scope.$digest()
+            // socket.disconnect()
         })
 
         // //socket reconnect success
