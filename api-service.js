@@ -1,19 +1,21 @@
+
+
 const moduleName = 'apiServiceModule';
 const serviceName = 'apiService';
-const GET_LIST_USER = 'http://admin.dev.i2g.cloud/user/list';
-const GET_LIST_CONVERSATION_OF_USER = '/api/conversation/list';
-const GET_CONVERSATION = '/api/conversation';
-const LEAVE_CONVERSATION = '/api/conversation/leave';
-const ADD_USER_TO_CONVERSATION = '/api/conversation/user/add'
-const POST_MESSAGE = '/api/message/new'
-const SEEN_MESSAGE = '/api/message/seen';
-const UPLOAD = '/api/upload'
-
 angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
+    let self = this;
+    const GET_LIST_CONVERSATION_OF_USER = '/api/conversation/list';
+    const GET_CONVERSATION = '/api/conversation';
+    const LEAVE_CONVERSATION = '/api/conversation/leave';
+    const ADD_USER_TO_CONVERSATION = '/api/conversation/user/add'
+    const POST_MESSAGE = '/api/message/new'
+    const SEEN_MESSAGE = '/api/message/seen';
+    const UPLOAD = '/api/upload'
+    // const GET_LIST_USER = 'http://admin.dev.i2g.cloud/user/list';
     function doPost(URL, token, data, cb) {
         $http({
             method: 'POST',
-            url: URL == GET_LIST_USER ? URL : (BASE_URL+URL),
+            url: URL == self.GET_LIST_USER ? URL : (self.BASE_URL+URL),
             headers: {
                 'Authorization': token
             },
@@ -32,7 +34,7 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
         });
     }
     this.getListUser = function(token, data, cb) {
-        doPost(GET_LIST_USER, token, data, cb);
+        doPost(self.GET_LIST_USER, token, data, cb);
     }
     this.getListConversationOfUser = function(token, data, cb) {
         doPost(GET_LIST_CONVERSATION_OF_USER, token, data, cb);
@@ -54,7 +56,7 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
     }
     this.upload = (token, data, cb) => {
         Upload.upload({
-            url: BASE_URL+UPLOAD,
+            url: self.BASE_URL+UPLOAD,
             headers: {
                 'Authorization': token
             },

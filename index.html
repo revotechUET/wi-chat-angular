@@ -127,7 +127,7 @@
                         <span ng-show="!wiChat.showContacts" ng-click="wiChat.showContacts=!wiChat.showContacts;" class="fa fa-chevron-down" style="float: right;cursor: pointer;"></span>
                     </div>
                     <div ng-show="wiChat.showContacts" class="listContact row">
-                        <div ng-repeat="user in wiChat.listUser | filter: wiChat.search | orderBy: 'active'" 
+                        <div ng-repeat="user in wiChat.listUser | filter: wiChat.search | orderBy: 'active'"
                             ng-show="user.username != wiChat.user.username"
                             class="row" style="position: relative;margin-top: 5px">
                             <div style="width: 20%;padding: 0px">
@@ -148,8 +148,8 @@
     </div>
 </div>
 <script>
-    var BASE_URL = 'http://chat.dev.i2g.cloud';
-    var socket = io(BASE_URL);
+    // var BASE_URL = 'http://chat.dev.i2g.cloud';
+    var socket;
 
     //prevent drop submit
     var $submit = document.getElementById('wi-chat-submit')

@@ -16,7 +16,9 @@ angular.module(moduleName, [chatService.name, avatar.name, chatMessage.name, img
             token: '=',
             username: '=',
             groupName: '=',
-            owner: '='
+            owner: '=',
+            url: '<',
+            getListUser: '<'
         }
     });
 
@@ -99,7 +101,13 @@ function Controller(apiService, $scope, $element, $timeout) {
         }
     }
     this.$onInit = function() {
-        if(this.token) {
+        console.log(self.url, self.getListUser);
+        lengthUrl = self.url.length;
+        apiService.BASE_URL = self.url;
+        apiService.GET_LIST_USER = self.getListUser;
+        socket = io(self.url);
+        socketOn();
+        if(self.token) {
             init();
         }
     }
@@ -143,30 +151,7 @@ function Controller(apiService, $scope, $element, $timeout) {
             textMessage.val('');
         }
     });
-    socket.on('sendMessage', function (data) {
-        if(data.username!=self.user.username && !self.show){
-            if(data.idConversation==self.listConver[0].id){
-                __toastr.success('Admin has sent message to Help Desk');
-            }
-            else {
-                __toastr.success(data.username + ' has sent message to ' + data.nameConversation + ' group');
-            }
-        }
-        if(self.curConver.id == data.idConversation) {
-            self.curConver.Messages = self.curConver.Messages?self.curConver.Messages:[];
-            $timeout(function() {
-                self.curConver.Messages.push(data);
-                $timeout(function(){
-                    listMessage.scrollTop(listMessage[0].scrollHeight);
-                }, 500);
-            });
-        }
-        if(!(self.curConver.id == data.idConversation && $('.text-message').is(':focus')) && self.user.username!=data.username) {
-            $timeout(function() {
-                self.listConver.filter(function(c) {return c.id == data.idConversation})[0].lastMessFontWeight = 'bolder';
-            });
-        }
-    });
+
     this.upload = function (files) {
         async.forEachOfSeries(files, (file, i, _done) => {
             let type = file.type.substring(0, 5);
@@ -211,18 +196,18 @@ function Controller(apiService, $scope, $element, $timeout) {
     }
 
     ////////////////////
-    let lengthUrl = BASE_URL.length;
+    let lengthUrl;
     this.getImageOrigin = function (path) {
         let p = path.slice(lengthUrl + 1);
-        return BASE_URL + '/api/imageOrigin/' + p + '?token=' + self.token;
+        return self.url + '/api/imageOrigin/' + p + '?token=' + self.token;
     }
     this.download = function (path) {
         let p = path.slice(lengthUrl + 1);
-        return BASE_URL + '/api/download/' + p + '?token=' + self.token;
+        return self.url + '/api/download/' + p + '?token=' + self.token;
     }
     this.thumb = function (path) {
         let p = path.slice(lengthUrl + 1);
-        return BASE_URL + '/api/thumb/' + p + '?token=' + self.token;
+        return self.url + '/api/thumb/' + p + '?token=' + self.token;
     }
     this.fileName = function (path) {
         return path.substring(lengthUrl + 35 + self.curConver.name.length, path.length);
@@ -273,30 +258,56 @@ function Controller(apiService, $scope, $element, $timeout) {
         cancel: '.content',
         cursor: 'move'
     })
-    socket.on('send-members-online', function(data) {
-        if(self.listUser)
-        $timeout(function(){
-            for(x of data) {
-                self.listUser.forEach(function(user) {
-                    if(user.username==x) user.active = 'rgb(66, 183, 42)';
-                })
+    function socketOn() {
+        socket.on('sendMessage', function (data) {
+            if(data.username!=self.user.username && !self.show){
+                if(data.idConversation==self.listConver[0].id){
+                    __toastr.success('Admin has sent message to Help Desk');
+                }
+                else {
+                    __toastr.success(data.username + ' has sent message to ' + data.nameConversation + ' group');
+                }
             }
-        })
-    })
-    socket.on('disconnected', function(data) {
-        if(self.listUser)
-        $timeout(function() {
-            self.listUser.forEach(function(user) {
-                if(user.username==data) user.active = '';
+            if(self.curConver.id == data.idConversation) {
+                self.curConver.Messages = self.curConver.Messages?self.curConver.Messages:[];
+                $timeout(function() {
+                    self.curConver.Messages.push(data);
+                    $timeout(function(){
+                        listMessage.scrollTop(listMessage[0].scrollHeight);
+                    }, 500);
+                });
+            }
+            if(!(self.curConver.id == data.idConversation && $('.text-message').is(':focus')) && self.user.username!=data.username) {
+                $timeout(function() {
+                    self.listConver.filter(function(c) {return c.id == data.idConversation})[0].lastMessFontWeight = 'bolder';
+                });
+            }
+        });
+        socket.on('send-members-online', function(data) {
+            if(self.listUser)
+            $timeout(function(){
+                for(x of data) {
+                    self.listUser.forEach(function(user) {
+                        if(user.username==x) user.active = 'rgb(66, 183, 42)';
+                    })
+                }
             })
         })
-    })
-    socket.on('off-project', function(data) {
-        if(self.listUser)
-        $timeout(function() {
-            self.listUser.forEach(function(user) {
-                if(user.username==data.username) user.active = '';
+        socket.on('disconnected', function(data) {
+            if(self.listUser)
+            $timeout(function() {
+                self.listUser.forEach(function(user) {
+                    if(user.username==data) user.active = '';
+                })
             })
         })
-    })
+        socket.on('off-project', function(data) {
+            if(self.listUser)
+            $timeout(function() {
+                self.listUser.forEach(function(user) {
+                    if(user.username==data.username) user.active = '';
+                })
+            })
+        })
+    }
 };
