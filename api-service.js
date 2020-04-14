@@ -2,7 +2,7 @@
 
 const moduleName = 'apiServiceModule';
 const serviceName = 'apiService';
-angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
+angular.module(moduleName, []).service(serviceName, ['$http', 'Upload', function ($http, Upload) {
     let self = this;
     const GET_LIST_CONVERSATION_OF_USER = '/api/conversation/list';
     const GET_CONVERSATION = '/api/conversation';
@@ -78,5 +78,5 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
             });
     }
     return this;
-});
+}]);
 module.exports.name = moduleName;

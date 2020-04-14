@@ -21,7 +21,7 @@ angular.module(moduleName, [chatService.name, avatar.name, chatMessage.name, img
             getListUser: '<'
         }
     });
-
+Controller.$inject = ['apiService', '$scope', '$element', '$timeout'];
 function Controller(apiService, $scope, $element, $timeout) {
     const WIDTH_IMAGE_THUMB = 130;
     let self = this;
