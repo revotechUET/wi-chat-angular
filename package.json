@@ -1,5 +1,6 @@
 {
     "name": "chat-module-angular",
+    "version": "1.0.0",
     "main": "./dist/chat-module.webpack.js",
     "module": "./app.js",
     "devDependencies": {
