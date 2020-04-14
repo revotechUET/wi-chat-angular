@@ -1,10 +1,8 @@
 let path = require('path');
 let OUTPUT = path.join(__dirname, 'dist');
 
-
 module.exports = {
     mode: 'development',
-    devtool: 'inline-sourcemap',
     module: {
         rules: [
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
@@ -23,8 +21,7 @@ module.exports = {
     ],
     output: {
         path: OUTPUT,
-        filename: 'chat-module.webpack.js',
-        // publicPath : path.join(__dirname, '../../wi-angular/source/vendor/js')
+        filename: 'wi-chat-module.js',
         publicPath: '../source/img'
     }
 }

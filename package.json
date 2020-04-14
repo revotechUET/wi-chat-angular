@@ -1,7 +1,7 @@
 {
-    "name": "chat-module-angular",
+    "name": "wi-chat-module",
     "version": "1.0.0",
-    "main": "./dist/chat-module.webpack.js",
+    "main": "./dist/wi-chat-module.js",
     "module": "./app.js",
     "devDependencies": {
         "css-loader": "^0.28.11",
