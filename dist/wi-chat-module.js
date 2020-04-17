@@ -115,7 +115,7 @@ eval("__webpack_require__(/*! ./style.css */ \"./style.css\");\nlet chatService 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<style>\\n    .circle {\\n        position: relative;\\n        border-radius: 100px;\\n        display: table;\\n        width: 30px;\\n        height: 30px;\\n    }\\n    .name {\\n        position: absolute;\\n        transform: translate(-50%, -50%);\\n        top: 50%;\\n        left: 50%;\\n        font-size: 150%;\\n        color: #fff;\\n    }\\n</style>\\n<div class=\\\"circle\\\" style=\\\"background: {{avatar.getColor()}}\\\">\\n    <b class=\\\"name\\\">{{avatar.name()}}</b>\\n</div>\\n\";\n\n//# sourceURL=webpack:///./components/avatar/avatar.html?");
+eval("module.exports = \"<style>\\n    .circle {\\n        position: relative;\\n        border-radius: 100px;\\n        display: table;\\n        width: 30px;\\n        height: 30px;\\n    }\\n    .name {\\n        position: absolute;\\n        transform: translate(-50%, -50%);\\n        top: 50%;\\n        left: 50%;\\n        font-size: 150%;\\n        color: #fff;\\n    }\\n</style>\\n<div class=\\\"circle\\\" ng-style=\\\"{'background': avatar.getColor()}\\\">\\n    <b class=\\\"name\\\">{{avatar.name()}}</b>\\n</div>\\n\";\n\n//# sourceURL=webpack:///./components/avatar/avatar.html?");
 
 /***/ }),
 
