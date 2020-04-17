@@ -25,7 +25,7 @@
                     </div>
                     <div ng-if="message.User.username!=wiChat.user.username" style="width: 70%; float: left;margin-bottom: 2px">
                         <div class="col-sm-2" style="padding: 0px">
-                            <avatar username="message.User.username" ng-show="$index==wiChat.curConver.Messages.length || message.User.username!= wiChat.curConver.Messages[$index+1].User.username"></avatar>
+                            <avatar username="message.User.username" color="''" ng-show="$index==wiChat.curConver.Messages.length || message.User.username!= wiChat.curConver.Messages[$index+1].User.username"></avatar>
                             <div ng-show="!($index==wiChat.curConver.Messages.length || message.User.username!= wiChat.curConver.Messages[$index+1].User.username)"
                                 style="display: table; width: 35px; height: 35px; border: 1px solid balck;">
                             </div>
