@@ -1,20 +1,17 @@
-<style>
-    .circle {
-        position: relative;
-        border-radius: 100px;
-        display: table;
-        width: 30px;
-        height: 30px;
-    }
-    .name {
+<div style="
+    position: relative;
+    border-radius: 100px;
+    display: table;
+    width: 30px;
+    height: 30px;" ng-style="{background: avatar.getColor()}">
+    <b style="
         position: absolute;
         transform: translate(-50%, -50%);
         top: 50%;
         left: 50%;
         font-size: 150%;
         color: #fff;
-    }
-</style>
-<div class="circle" ng-style="{'background': avatar.getColor()}">
-    <b class="name">{{avatar.name()}}</b>
+    ">
+        {{avatar.name()}}
+    </b>
 </div>
