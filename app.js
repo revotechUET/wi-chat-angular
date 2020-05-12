@@ -198,15 +198,15 @@ function Controller(apiService, $scope, $element, $timeout) {
     ////////////////////
     let lengthUrl;
     this.getImageOrigin = function (path) {
-        let p = path.slice(lengthUrl + 1);
+        let p = path.slice(lengthUrl);
         return self.url + '/api/imageOrigin/' + p + '?token=' + self.token;
     }
     this.download = function (path) {
-        let p = path.slice(lengthUrl + 1);
+        let p = path.slice(lengthUrl);
         return self.url + '/api/download/' + p + '?token=' + self.token;
     }
     this.thumb = function (path) {
-        let p = path.slice(lengthUrl + 1);
+        let p = path.slice(lengthUrl);
         return self.url + '/api/thumb/' + p + '?token=' + self.token;
     }
     this.fileName = function (path) {
