@@ -46,8 +46,8 @@
                             <div data-toggle="tooltip" data-placement="left" title="{{message.sendAt | date: 'H:mm a'}}" ng-if="message.type=='image'"
                                 style=" display: inline-block;max-width: 100%">
                                 <p class="message" style=" display: inline;">
-                                    <img-preview small-img-link="wiChat.thumb(message.content)" download-link="wiChat.download(message.content)" full-img-link="wiChat.getImageOrigin(message.content)">
-                                    </img-preview>
+                                    <img-preview-chat small-img-link="wiChat.thumb(message.content)" download-link="wiChat.download(message.content)" full-img-link="wiChat.getImageOrigin(message.content)">
+                                    </img-preview-chat>
                                 </p>
                             </div>
                         </div>
@@ -68,8 +68,8 @@
                         <div data-toggle="tooltip" data-placement="left" title="{{message.sendAt | date: 'H:mm a'}}" ng-if="message.type=='image'"
                             style=" text-align: right; float: right; display: inline-block;padding: 6px 8px;max-width: 100%">
                             <p class="message" style=" display: inline;">
-                                <img-preview small-img-link="wiChat.thumb(message.content)" download-link="wiChat.download(message.content)" full-img-link="wiChat.getImageOrigin(message.content)">
-                                </img-preview>
+                                <img-preview-chat small-img-link="wiChat.thumb(message.content)" download-link="wiChat.download(message.content)" full-img-link="wiChat.getImageOrigin(message.content)">
+                                </img-preview-chat>
                             </p>
                         </div>
                     </div>

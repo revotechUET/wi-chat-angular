@@ -1,6 +1,6 @@
-const componentName = 'imgPreview';
-const moduleName = 'img-preview';
-require('../img-preview/img-preview.css');
+const componentName = 'imgPreviewChat';
+const moduleName = 'img-preview-chat';
+require('../img-preview-chat/img-preview-chat.css');
 
 function Controller() {
     let self = this;
@@ -225,7 +225,7 @@ function Controller() {
 
 let app = angular.module(moduleName, []);
 app.component(componentName, {
-    template: require('../img-preview/img-preview.html'),
+    template: require('../img-preview-chat/img-preview-chat.html'),
     controller: Controller,
     controllerAs: componentName,
     bindings: {
