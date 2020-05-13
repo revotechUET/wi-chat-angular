@@ -1,3 +1,4 @@
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 let path = require('path');
 let OUTPUT = path.join(__dirname, 'dist');
 
@@ -23,5 +24,8 @@ module.exports = {
         path: OUTPUT,
         filename: 'wi-chat-module.js',
         publicPath: '../source/img'
-    }
+    },
+    plugins: [
+        new HardSourceWebpackPlugin(),
+    ]
 }

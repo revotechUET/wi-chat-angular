@@ -199,15 +199,18 @@ function Controller(apiService, $scope, $element, $timeout) {
     let lengthUrl;
     this.getImageOrigin = function (path) {
         let p = path.slice(lengthUrl);
-        return self.url + '/api/imageOrigin/' + p + '?token=' + self.token;
+        console.log("origin", path);
+        return self.url + ('/api/imageOrigin/' + p).replace('//', '/') + '?token=' + self.token;
     }
     this.download = function (path) {
         let p = path.slice(lengthUrl);
-        return self.url + '/api/download/' + p + '?token=' + self.token;
+        console.log("download", path);
+        return self.url + ('/api/download/' + p).replace('//', '/') + '?token=' + self.token;
     }
     this.thumb = function (path) {
         let p = path.slice(lengthUrl);
-        return self.url + '/api/thumb/' + p + '?token=' + self.token;
+        console.log("thumb", path);
+        return self.url + ('/api/thumb/' + p).replace('//', '/') + '?token=' + self.token;
     }
     this.fileName = function (path) {
         return path.substring(lengthUrl + 35 + self.curConver.name.length, path.length);
