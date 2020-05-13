@@ -1,6 +1,8 @@
 <div ng-show="wiChat.show" class="wraper container">
     <div class="row header" style="font-size: 16px; position: relative;">
-        <p style="width: 80%; overflow-x: hidden; text-overflow: ellipsis; display: inline-block;">Conversation({{wiChat.curConver.name}})<socket-status></socket-status></p>
+        <p style="width: 80%; overflow-x: hidden; text-overflow: ellipsis; display: inline-block;">
+            Conversation({{wiChat.curConver.aliasName || wiChat.curConver.name}})<socket-status></socket-status>
+        </p>
         <span ng-click="wiChat.show=false" style="float: right; cursor: pointer;" class="fa fa-close"></span>
     </div>
     <div class="row content">
@@ -114,7 +116,7 @@
                                 <avatar username="'G'" color="'steelblue'"></avatar>
                             </div>
                             <div style="width: 80%;padding: 0px;padding-right: 10px; position: absolute; transform: translateY(-50%); top: 50%; margin-left: 40px">
-                                <p style="text-overflow: ellipsis; display: inline-block; width: 70%; overflow-x: hidden; margin-bottom: 0px; white-space:nowrap; font-weight: {{conver.lastMessFontWeight}}">{{conver.name}}</p>
+                                <p style="text-overflow: ellipsis; display: inline-block; width: 70%; overflow-x: hidden; margin-bottom: 0px; white-space:nowrap; font-weight: {{conver.lastMessFontWeight}}">{{conver.aliasName || conver.name}}</p>
                                 <span ng-if="conver.lastMessFontWeight" class="badge badge-danger" style="background: red;float: right; font-size: 10px">New</span>
                             </div>
                         </div>

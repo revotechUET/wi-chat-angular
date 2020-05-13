@@ -16,6 +16,7 @@ angular.module(moduleName, [chatService.name, avatar.name, chatMessage.name, img
             token: '=',
             username: '=',
             groupName: '=',
+            aliasGroupName: '<',
             owner: '=',
             url: '<',
             getListUser: '<'
@@ -88,6 +89,7 @@ function Controller(apiService, $scope, $element, $timeout) {
                             if(!self.user) self.user = res.user;
                             self.listUser = listUser;
                             self.curConver = res.conver;
+                            self.curConver.aliasName = self.aliasGroupName;
                             self.listConver[1] = res.conver;
                             socket.emit('off-project', { idConversation: oldConversationId, username: self.user.username });
                             socket.emit('join-room', { username: self.user.username, idConversation: res.conver.id });
@@ -120,7 +122,7 @@ function Controller(apiService, $scope, $element, $timeout) {
     })
     window.list = self.listConver;
     $scope.$watch(function() {
-        return self.groupName;
+        return self.groupName + self.aliasGroupName;
     }, function(newValue, oldValue) {
         if(newValue && newValue!=oldValue) {
             changeGroup();
@@ -187,6 +189,7 @@ function Controller(apiService, $scope, $element, $timeout) {
             getConversation(conver.name, function(res) {
                 if(res) {
                     self.curConver = res.conver;
+                    if(self.curConver.name === self.groupName) self.curConver.aliasName = self.aliasGroupName;
                     if(self.curConver.lastMessFontWeight) seenMessage();
                 }
             })
@@ -199,17 +202,14 @@ function Controller(apiService, $scope, $element, $timeout) {
     let lengthUrl;
     this.getImageOrigin = function (path) {
         let p = path.slice(lengthUrl);
-        console.log("origin", path);
         return self.url + ('/api/imageOrigin/' + p).replace('//', '/') + '?token=' + self.token;
     }
     this.download = function (path) {
         let p = path.slice(lengthUrl);
-        console.log("download", path);
         return self.url + ('/api/download/' + p).replace('//', '/') + '?token=' + self.token;
     }
     this.thumb = function (path) {
         let p = path.slice(lengthUrl);
-        console.log("thumb", path);
         return self.url + ('/api/thumb/' + p).replace('//', '/') + '?token=' + self.token;
     }
     this.fileName = function (path) {
