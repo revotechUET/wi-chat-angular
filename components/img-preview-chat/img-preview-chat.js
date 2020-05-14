@@ -142,7 +142,7 @@ function Controller() {
         let zoomRate = 1;
 
         background.style.backgroundImage = `url('${self.fullImgLink}')`;
-        console.log({'self.fullIMGLinkd': self.fullImgLink});
+        // console.log({'self.fullIMGLinkd': self.fullImgLink});
         function enableZoom() {
             background.onmousemove = function (e) {
                 const zoomer = e.currentTarget;
