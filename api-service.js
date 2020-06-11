@@ -12,6 +12,7 @@ angular.module(moduleName, []).service(serviceName, ['$http', 'Upload', function
     const SEEN_MESSAGE = '/api/message/seen';
     const UPLOAD = '/api/upload';
     const UPDATE_CONVERSATION = '/api/conversation/update';
+    const GET_DISABLE_NOTI = '/api/conversation/getDisableNoti';
     // const GET_LIST_USER = 'http://admin.dev.i2g.cloud/user/list';
     function doPost(URL, token, data, cb) {
         $http({
@@ -33,6 +34,9 @@ angular.module(moduleName, []).service(serviceName, ['$http', 'Upload', function
             if (__toastr) __toastr.error(response);
             cb();
         });
+    }
+    this.getDisableNoti = function(token, data, cb) {
+        doPost(GET_DISABLE_NOTI, token, data, cb);
     }
     this.updateConversation = function(token, data, cb) {
         doPost(UPDATE_CONVERSATION, token, data, cb);

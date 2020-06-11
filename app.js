@@ -45,15 +45,12 @@ function Controller(apiService, $scope, $element, $timeout) {
                 },
                 handle: () => {
                     self.disableNoti = !self.disableNoti;
-                    getConversation(self.groupName, function (res) {
-                        if (res) {
-                            apiService.updateConversation(self.token, {
-                                disableNoti: self.disableNoti,
-                                name: res.conver.name
-                            }, (res) => {
-                                console.log(res);
-                            })
-                        }
+                    apiService.updateConversation(self.token, {
+                        disableNoti: self.disableNoti,
+                        idConversation: self.listConver[1].id,
+                        idUser: self.user.id
+                    }, (res) => {
+                        console.log(res);
                     })
                 }
             }
@@ -67,7 +64,15 @@ function Controller(apiService, $scope, $element, $timeout) {
                 socket.emit('join-room', { username: self.user.username, idConversation: res.conver.id });
             }
         });
-        changeGroup();
+        changeGroup(getDisableNoti);
+    }
+    function getDisableNoti() {
+        apiService.getDisableNoti(self.token, {
+            idConversation: self.listConver[1].id,
+            idUser: self.user.id
+        }, (res) => {
+            self.disableNoti = res.disableNoti;
+        })
     }
     function getConversation(nameConversation, cb) {
         apiService.getConversation(self.token, {
@@ -100,7 +105,7 @@ function Controller(apiService, $scope, $element, $timeout) {
             }
         });
     }
-    function changeGroup() {
+    function changeGroup(cb) {
         if (self.groupName) {
             let oldConversationId = self.curConver.id;
             getListUser(self.groupName, self.owner, function (listUser) {
@@ -110,11 +115,11 @@ function Controller(apiService, $scope, $element, $timeout) {
                             if (!self.user) self.user = res.user;
                             self.listUser = listUser;
                             self.curConver = res.conver;
-                            self.disableNoti = self.curConver.disableNoti;
                             self.curConver.aliasName = self.aliasGroupName;
                             self.listConver[1] = res.conver;
                             socket.emit('off-project', { idConversation: oldConversationId, username: self.user.username });
                             socket.emit('join-room', { username: self.user.username, idConversation: res.conver.id });
+                            cb && cb();
                         }
                     })
                 } else {
@@ -285,7 +290,8 @@ function Controller(apiService, $scope, $element, $timeout) {
     })
     function socketOn() {
         socket.on('sendMessage', function (data) {
-            if (data.username != self.user.username && !self.show && !self.disableNoti) {
+            if (data.username != self.user.username && !self.show 
+                && !self.disableNoti && data.nameConversation == self.groupName) {
                 if (data.idConversation == self.listConver[0].id) {
                     __toastr.success('Admin has sent message to Help Desk');
                 }

@@ -8,16 +8,16 @@ function Controller($window, $scope) {
 
     $(document).ready(function(){
         // Show hide popover
-        $(".config-dropdown .dropdown").click(function(){
-            $(".dropdown-menu").slideToggle("fast");
+        $(".wi-chat-config-dropdown .dropdown").click(function(){
+            $(".wi-chat-config-dropdown .dropdown-menu").slideToggle("fast");
         });
     });
     $(document).on("click", function(event){
-        var $trigger1 = $(".config-dropdown .dropdown");
-        var $trigger2 = $(".config-dropdown .dropdown-menu");
+        var $trigger1 = $(".wi-chat-config-dropdown .dropdown");
+        var $trigger2 = $(".wi-chat-config-dropdown .dropdown-menu");
         if($trigger1 !== event.target && $trigger2 !== event.target
             && !$trigger1.has(event.target).length && !$trigger2.has(event.target).length){
-            $(".dropdown-menu").slideUp("fast");
+            $(".wi-chat-config-dropdown .dropdown-menu").slideUp("fast");
         }            
     });
 
