@@ -137,7 +137,8 @@
                             </div>
                             <div style="width: 80%;padding: 0px;padding-right: 10px; position: absolute; transform: translateY(-50%); top: 50%; margin-left: 40px">
                                 <p style="text-overflow: ellipsis; display: inline-block; width: 80%; overflow-x: hidden; margin-bottom: 0px; white-space:nowrap;">{{user.username}}</p>
-                                <span class="fa fa-circle" style="color: {{user.active}}; float: right; font-size: 10px"></span>
+                                <!-- <span class="fa fa-circle" style="color: {{user.active}}; float: right; font-size: 10px"></span> -->
+                                <span class="fa fa-circle" ng-style="{'color': user.active, 'float': 'right', 'font-size': '10px'}"></span>
                             </div>
                         </div>
                     </div>
