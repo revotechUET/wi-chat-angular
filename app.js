@@ -4,9 +4,10 @@ let avatar = require('./components/avatar/avatar.js');
 let chatMessage = require('./components/chat-message/chat-message.js');
 let imgPreview = require('./components/img-preview-chat/img-preview-chat.js');
 let socketStatus = require('./components/socket-status/socket-status');
+let configDropdown = require('./components/config-dropdown/config-dropdown');
 let moduleName = componentName = 'wiChat';
 
-angular.module(moduleName, [chatService.name, avatar.name, chatMessage.name, imgPreview.name,socketStatus.name, 'ngFileUpload'])
+angular.module(moduleName, [configDropdown.name, chatService.name, avatar.name, chatMessage.name, imgPreview.name, socketStatus.name, 'ngFileUpload'])
     .component(componentName, {
         template: require('./index.html'),
         controller: Controller,
@@ -35,14 +36,34 @@ function Controller(apiService, $scope, $element, $timeout) {
     let listMessage = $element.find('.list-message');
 
     function init() {
-        let oldHelpDeskId =( self.listConver[0] || {} ).id;
+        let oldHelpDeskId = (self.listConver[0] || {}).id;
         self.curConver = {}; self.listConver = [];
-        getConversation('Help_Desk-' + self.username, function(res) {
-            if(res) {
+        self.configList = [
+            {
+                label: () => {
+                    return `${self.disableNoti ? 'Enable' : 'Disable'} Chat Group Notification`;
+                },
+                handle: () => {
+                    self.disableNoti = !self.disableNoti;
+                    getConversation(self.groupName, function (res) {
+                        if (res) {
+                            apiService.updateConversation(self.token, {
+                                disableNoti: self.disableNoti,
+                                name: res.conver.name
+                            }, (res) => {
+                                console.log(res);
+                            })
+                        }
+                    })
+                }
+            }
+        ]
+        getConversation('Help_Desk-' + self.username, function (res) {
+            if (res) {
                 self.user = res.user;
                 self.curConver = res.conver;
                 self.listConver[0] = res.conver;
-                if(oldHelpDeskId) socket.emit('off-project', { username: self.user.username, idConversation: oldHelpDeskId });
+                if (oldHelpDeskId) socket.emit('off-project', { username: self.user.username, idConversation: oldHelpDeskId });
                 socket.emit('join-room', { username: self.user.username, idConversation: res.conver.id });
             }
         });
@@ -51,8 +72,8 @@ function Controller(apiService, $scope, $element, $timeout) {
     function getConversation(nameConversation, cb) {
         apiService.getConversation(self.token, {
             name: nameConversation
-        }, function(res) {
-            if(res) {
+        }, function (res) {
+            if (res) {
                 cb && cb(res);
             }
             else cb && cb();
@@ -62,8 +83,8 @@ function Controller(apiService, $scope, $element, $timeout) {
         apiService.getListUser(self.token, {
             project_name: project_name,
             owner: owner
-        }, function(res) {
-            if(res) cb && cb(res);
+        }, function (res) {
+            if (res) cb && cb(res);
             else cb && cb();
         })
     }
@@ -71,63 +92,64 @@ function Controller(apiService, $scope, $element, $timeout) {
         apiService.seenMessage(self.token, {
             idUser: self.user.id,
             nameConversation: self.curConver.name
-        }, function(res) {
-            if(res) {
-                $timeout(function() {
-                    self.listConver.filter(function(c) {return c.id==self.curConver.id;})[0].lastMessFontWeight = '';
+        }, function (res) {
+            if (res) {
+                $timeout(function () {
+                    self.listConver.filter(function (c) { return c.id == self.curConver.id; })[0].lastMessFontWeight = '';
                 })
             }
         });
     }
     function changeGroup() {
-        if(self.groupName) {
+        if (self.groupName) {
             let oldConversationId = self.curConver.id;
-            getListUser(self.groupName, self.owner, function(listUser) {
-                if(listUser && listUser.length>=2) {
-                    getConversation(self.groupName, function(res) {
-                        if(res) {
-                            if(!self.user) self.user = res.user;
+            getListUser(self.groupName, self.owner, function (listUser) {
+                if (listUser && listUser.length >= 2) {
+                    getConversation(self.groupName, function (res) {
+                        if (res) {
+                            if (!self.user) self.user = res.user;
                             self.listUser = listUser;
                             self.curConver = res.conver;
+                            self.disableNoti = self.curConver.disableNoti;
                             self.curConver.aliasName = self.aliasGroupName;
                             self.listConver[1] = res.conver;
                             socket.emit('off-project', { idConversation: oldConversationId, username: self.user.username });
                             socket.emit('join-room', { username: self.user.username, idConversation: res.conver.id });
                         }
                     })
-                }else{
-                    self.listConver.splice(1,1);
+                } else {
+                    self.listConver.splice(1, 1);
                     self.curConver = self.listConver[0];
                 }
             })
         }
     }
-    this.$onInit = function() {
+    this.$onInit = function () {
         console.log(self.url, self.getListUser);
         lengthUrl = self.url.length;
         apiService.BASE_URL = self.url;
         apiService.GET_LIST_USER = self.getListUser;
         socket = io(self.url);
         socketOn();
-        if(self.token) {
+        if (self.token) {
             init();
         }
     }
-    $scope.$watch(function() {
+    $scope.$watch(function () {
         return self.token;
-    }, function(newValue, oldValue) {
-        if(newValue && newValue!=oldValue) {
+    }, function (newValue, oldValue) {
+        if (newValue && newValue != oldValue) {
             init();
         }
     })
     window.list = self.listConver;
-    $scope.$watch(function() {
+    $scope.$watch(function () {
         return self.groupName + self.aliasGroupName;
-    }, function(newValue, oldValue) {
-        if(newValue && newValue!=oldValue) {
+    }, function (newValue, oldValue) {
+        if (newValue && newValue != oldValue) {
             changeGroup();
-        }else if(!newValue) {
-            self.listConver.splice(1,1);
+        } else if (!newValue) {
+            self.listConver.splice(1, 1);
             self.curConver = self.listConver[0];
         }
     })
@@ -135,7 +157,7 @@ function Controller(apiService, $scope, $element, $timeout) {
         if (e.which == 13 && !e.shiftKey) {
             let content = textMessage.val();
             content = content.trim();
-            if(content) {
+            if (content) {
                 let message = {
                     content: preventXSS(content),
                     type: 'text',
@@ -159,12 +181,12 @@ function Controller(apiService, $scope, $element, $timeout) {
             let type = file.type.substring(0, 5);
             apiService.upload(self.token, {
                 file: file,
-                fields: {'name': self.curConver.name, 'width': WIDTH_IMAGE_THUMB}
+                fields: { 'name': self.curConver.name, 'width': WIDTH_IMAGE_THUMB }
             }, (res) => {
-                if(res) {
+                if (res) {
                     let message = {
                         content: res,
-                        type: type=='image'?'image':'file',
+                        type: type == 'image' ? 'image' : 'file',
                         username: self.user.username,
                         nameConversation: self.curConver.name,
                         idSender: self.user.id,
@@ -185,16 +207,16 @@ function Controller(apiService, $scope, $element, $timeout) {
 
         self.curConverId = conver.id;
 
-        if(self.curConver.id!=conver.id) {
-            getConversation(conver.name, function(res) {
-                if(res) {
+        if (self.curConver.id != conver.id) {
+            getConversation(conver.name, function (res) {
+                if (res) {
                     self.curConver = res.conver;
-                    if(self.curConver.name === self.groupName) self.curConver.aliasName = self.aliasGroupName;
-                    if(self.curConver.lastMessFontWeight) seenMessage();
+                    if (self.curConver.name === self.groupName) self.curConver.aliasName = self.aliasGroupName;
+                    if (self.curConver.lastMessFontWeight) seenMessage();
                 }
             })
         } else {
-            if(self.curConver.lastMessFontWeight) seenMessage();
+            if (self.curConver.lastMessFontWeight) seenMessage();
         }
     }
 
@@ -220,8 +242,8 @@ function Controller(apiService, $scope, $element, $timeout) {
         let time2 = new Date(t2);
         return time1.toString().substring(0, 15) != time2.toString().substring(0, 15);
     }
-    this.seenMessage = function() {
-        if(self.curConver.lastMessFontWeight) seenMessage();
+    this.seenMessage = function () {
+        if (self.curConver.lastMessFontWeight) seenMessage();
     }
     function preventXSS(text) {
         const rule = {
@@ -238,16 +260,16 @@ function Controller(apiService, $scope, $element, $timeout) {
         text = text.replace(rule['<'].regex, rule['<'].replaceStr);
         return text;
     }
-    $scope.$watch(function() {return self.curConver}, function(newValue, oldValue) {
-        if(newValue) {
-            $timeout(function() {
+    $scope.$watch(function () { return self.curConver }, function (newValue, oldValue) {
+        if (newValue) {
+            $timeout(function () {
                 listMessage.scrollTop(listMessage[0].scrollHeight);
             }, 500)
         }
     })
-    $scope.$watch(function() {return self.show}, function(newValue, oldValue) {
-        if(newValue) {
-            $timeout(function() {
+    $scope.$watch(function () { return self.show }, function (newValue, oldValue) {
+        if (newValue) {
+            $timeout(function () {
                 listMessage.scrollTop(listMessage[0].scrollHeight);
             }, 500)
         }
@@ -263,54 +285,54 @@ function Controller(apiService, $scope, $element, $timeout) {
     })
     function socketOn() {
         socket.on('sendMessage', function (data) {
-            if(data.username!=self.user.username && !self.show){
-                if(data.idConversation==self.listConver[0].id){
+            if (data.username != self.user.username && !self.show && !self.disableNoti) {
+                if (data.idConversation == self.listConver[0].id) {
                     __toastr.success('Admin has sent message to Help Desk');
                 }
                 else {
                     __toastr.success(data.username + ' has sent message to ' + data.nameConversation + ' group');
                 }
             }
-            if(self.curConver.id == data.idConversation) {
-                self.curConver.Messages = self.curConver.Messages?self.curConver.Messages:[];
-                $timeout(function() {
+            if (self.curConver.id == data.idConversation) {
+                self.curConver.Messages = self.curConver.Messages ? self.curConver.Messages : [];
+                $timeout(function () {
                     self.curConver.Messages.push(data);
-                    $timeout(function(){
+                    $timeout(function () {
                         listMessage.scrollTop(listMessage[0].scrollHeight);
                     }, 500);
                 });
             }
-            if(!(self.curConver.id == data.idConversation && $('.text-message').is(':focus')) && self.user.username!=data.username) {
-                $timeout(function() {
-                    self.listConver.filter(function(c) {return c.id == data.idConversation})[0].lastMessFontWeight = 'bolder';
+            if (!(self.curConver.id == data.idConversation && $('.text-message').is(':focus')) && self.user.username != data.username) {
+                $timeout(function () {
+                    self.listConver.filter(function (c) { return c.id == data.idConversation })[0].lastMessFontWeight = 'bolder';
                 });
             }
         });
-        socket.on('send-members-online', function(data) {
-            if(self.listUser)
-            $timeout(function(){
-                for(x of data) {
-                    self.listUser.forEach(function(user) {
-                        if(user.username==x) user.active = 'rgb(66, 183, 42)';
+        socket.on('send-members-online', function (data) {
+            if (self.listUser)
+                $timeout(function () {
+                    for (x of data) {
+                        self.listUser.forEach(function (user) {
+                            if (user.username == x) user.active = 'rgb(66, 183, 42)';
+                        })
+                    }
+                })
+        })
+        socket.on('disconnected', function (data) {
+            if (self.listUser)
+                $timeout(function () {
+                    self.listUser.forEach(function (user) {
+                        if (user.username == data) user.active = '';
                     })
-                }
-            })
-        })
-        socket.on('disconnected', function(data) {
-            if(self.listUser)
-            $timeout(function() {
-                self.listUser.forEach(function(user) {
-                    if(user.username==data) user.active = '';
                 })
-            })
         })
-        socket.on('off-project', function(data) {
-            if(self.listUser)
-            $timeout(function() {
-                self.listUser.forEach(function(user) {
-                    if(user.username==data.username) user.active = '';
+        socket.on('off-project', function (data) {
+            if (self.listUser)
+                $timeout(function () {
+                    self.listUser.forEach(function (user) {
+                        if (user.username == data.username) user.active = '';
+                    })
                 })
-            })
         })
     }
 };

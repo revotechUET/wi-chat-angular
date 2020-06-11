@@ -1,0 +1,45 @@
+.config-dropdown {
+    display: inline-block;
+
+    ul {
+        padding   : 0;
+        list-style: none;
+        background: #f2f2f2;
+
+        &.dropdown-menu {
+            background: #f2f2f2;
+            display   : none;
+            position  : absolute;
+            z-index   : 999;
+
+            li {
+                display: block;
+            }
+        }
+
+        li {
+            display    : inline-block;
+            position   : relative;
+            line-height: 21px;
+            text-align : left;
+        }
+    }
+
+    div {
+        display    : inline-block;
+        position   : relative;
+        line-height: 21px;
+        text-align : left;
+
+        a {
+            display        : block;
+            color          : #333;
+            text-decoration: none;
+
+            &:hover {
+                color     : #fff;
+                background: #939393;
+            }
+        }
+    }
+}

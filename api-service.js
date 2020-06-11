@@ -10,7 +10,8 @@ angular.module(moduleName, []).service(serviceName, ['$http', 'Upload', function
     const ADD_USER_TO_CONVERSATION = '/api/conversation/user/add'
     const POST_MESSAGE = '/api/message/new'
     const SEEN_MESSAGE = '/api/message/seen';
-    const UPLOAD = '/api/upload'
+    const UPLOAD = '/api/upload';
+    const UPDATE_CONVERSATION = '/api/conversation/update';
     // const GET_LIST_USER = 'http://admin.dev.i2g.cloud/user/list';
     function doPost(URL, token, data, cb) {
         $http({
@@ -32,6 +33,9 @@ angular.module(moduleName, []).service(serviceName, ['$http', 'Upload', function
             if (__toastr) __toastr.error(response);
             cb();
         });
+    }
+    this.updateConversation = function(token, data, cb) {
+        doPost(UPDATE_CONVERSATION, token, data, cb);
     }
     this.getListUser = function(token, data, cb) {
         doPost(self.GET_LIST_USER, token, data, cb);

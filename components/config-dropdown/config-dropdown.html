@@ -1,0 +1,10 @@
+<div class="config-dropdown">
+    <div class="dropdown">
+        <span style="cursor: pointer;" class="fa fa-cog"></span>
+    </div>
+    <ul class="dropdown-menu">
+        <li ng-repeat="item in self.itemList" ng-click="item.handle()">
+            <a href="#">{{ self.getItemLabel(item.label) }}</a>
+        </li>
+    </ul>
+</div>

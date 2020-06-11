@@ -1,8 +1,11 @@
 <div ng-show="wiChat.show" class="wraper container">
     <div class="row header" style="font-size: 16px; position: relative;">
         <p style="width: 80%; overflow-x: hidden; text-overflow: ellipsis; display: inline-block;">
-            Conversation({{wiChat.curConver.aliasName || wiChat.curConver.name}})<socket-status></socket-status>
+            Conversation({{wiChat.curConver.aliasName || wiChat.curConver.name}})
+            <socket-status></socket-status>
+            <config-dropdown item-list="wiChat.configList"></config-dropdown>
         </p>
+
         <span ng-click="wiChat.show=false" style="float: right; cursor: pointer;" class="fa fa-close"></span>
     </div>
     <div class="row content">
