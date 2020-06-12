@@ -310,7 +310,9 @@ function Controller(apiService, $scope, $element, $timeout) {
             }
             if (!(self.curConver.id == data.idConversation && $('.text-message').is(':focus')) && self.user.username != data.username) {
                 $timeout(function () {
-                    self.listConver.filter(function (c) { return c.id == data.idConversation })[0].lastMessFontWeight = 'bolder';
+                    let conver = self.listConver.filter(function (c) { return c.id == data.idConversation })[0];
+                    if (conver)
+                        conver.lastMessFontWeight = 'bolder';
                 });
             }
         });
