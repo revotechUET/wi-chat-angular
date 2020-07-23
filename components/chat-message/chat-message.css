@@ -73,3 +73,10 @@
 .chat-message .unhappy-icon { background-position: -64px -80px; width: 16px; height: 16px; }
 .chat-message .wink-icon { background-position: -80px -80px; width: 16px; height: 16px; }
 .chat-message .unselectable { -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -o-user-select: none; user-select: none; }
+
+.chat-message {
+  user-select: text;
+}
+.chat-message a {
+  color: inherit;
+}

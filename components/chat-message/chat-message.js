@@ -5,93 +5,74 @@ require('../chat-message/chat-message.css');
 
 Controller.$inject = [];
 function Controller() {
-    let self = this;
+    const self = this;
 
-    const rules = Object.entries(iconTextRules);
-    const regex = toRegex();
-    // const regex = /(\:\)\))|(\:\-\))/g;
-
-    self.$onInit = function () {
+    this.$onInit = function () {
         preProcess();
     }
 
     function preProcess() {
         self.text = replaceText(self.text);
-        // console.log({'self.text': self.text})
     }
 
+    function replaceText(str) {
+        if (!str) return str;
+        return replaceLink(replaceIcon(str));
+    }
+
+    const linkRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+    function replaceLink(str) {
+        return str.replace(linkRegex, (p1) => `<a href="${p1}" target="_blank">${p1}</a>`);
+    }
+
+    const rules = Object.entries(iconTextRules);
+    const iconRegex = toRegex();
 
     //change str -> regexable str
     function preRegex(str) {
-        //console.log({str})
         return str
             .split('') //to list char
             .reduce((pre, cur) => `${pre}\\${cur}`, ''); //to string with \ attach to each char
     }
 
     function toRegex() {
-
         const listIcon = rules
             .reduce((pre, cur) => {
-                
-                // if(!pre.length) return cur[1];
-
-                
-                // const preIcons = pre[1]["text-replace"];
                 const curIcons = cur[1]["text-replace"];
-
-
-                // //console.log({pre, cur, curIcons});
-
                 return [...pre, ...curIcons];
             }, [])
-        //console.log({listIcon});
         const regexStr = listIcon
             .reduce((pre, cur, i) => {
                 const cur_regex_str = preRegex(cur);
-
                 if (i === 0) return pre + cur_regex_str;
-
                 let str = `${pre}|${cur_regex_str}`;
-
                 if (i === listIcon.length - 1) str += ')';
-
                 return str;
-
-            }, '(')
+            }, '(');
         return new RegExp(regexStr, 'g');
-
     }
 
     function findIcon(text) {
         const obj = rules
-            .filter(o => {
+            .find(o => {
                 const listIcons = o[1]["text-replace"];
                 return !!listIcons.filter(i => i === text).length;
-            })[0]
+            });
         if (obj) return obj[1].icon;
         return null;
     }
 
-    function replaceText(str) {
-        const listIconsVerbose = str.match(regex);
-        //console.log({listIconsVerbose});
-        //remove duplicate
+    function replaceIcon(str) {
+        const listIconsVerbose = str.match(iconRegex);
         if(!listIconsVerbose || !listIconsVerbose.length) return str;
-        
         const listIcons = listIconsVerbose.filter((val, i) => listIconsVerbose.indexOf(val) === i);
-
-        //console.log({listIcons});
-
         let result = str;
         for (let icon of listIcons) {
             const _regex = new RegExp(preRegex(icon));
             const replaceIcon = findIcon(icon);
             const iconHtml = toHtmlWithIcon(replaceIcon);
-            //console.log({replaceIcon});
             if(replaceIcon) result = result.replace(_regex, iconHtml);
         }
-
         return result;
     }
 
