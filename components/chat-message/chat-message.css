@@ -34,7 +34,7 @@
 .chat-message .tongue-out-icon,
 .chat-message .unhappy-icon,
 .chat-message .wink-icon
-{ display: inline-block; background: url('/../../img/png.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
+{ display: inline-block; background: url('./png.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
 
 .chat-message .angry-1-icon { background-position: -0px -0px; width: 16px; height: 16px; }
 .chat-message .angry-icon { background-position: -16px -0px; width: 16px; height: 16px; }
